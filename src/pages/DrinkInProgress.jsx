@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function RecipeInProgress() {
+export default function DrinkInProgress() {
   return (
     <div>RecipeInProgress</div>
   );
