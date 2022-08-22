@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import fetchToken from '../../services/fetchTokens';
+import FilterCategory from '../FilterCategory/FilterCategory';
 import RecipeCard from '../RecipeCard/RecipeCard';
 
 export default function Recipes({ drink = false }) {
@@ -24,6 +25,7 @@ export default function Recipes({ drink = false }) {
 
   return (
     <div>
+      <FilterCategory drink={ drink } />
       {recipes.map((element, index) => {
         if (index > +'11') return true;
         return (
