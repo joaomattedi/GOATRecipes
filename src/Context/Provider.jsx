@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import Context from './Context';
 
 export default function Provider({ children }) {
-  const [filter, setFilter] = useState([]);
+  const [recipes, setRecipes] = useState([]);
 
   const context = {
-    filter,
-    setFilter,
+    recipes,
+    setRecipes,
   };
 
   return (

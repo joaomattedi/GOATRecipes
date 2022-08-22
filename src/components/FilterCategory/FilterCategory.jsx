@@ -5,7 +5,8 @@ import fetchToken from '../../services/fetchTokens';
 
 export default function FilterCategory({ drink }) {
   const [categories, setCategories] = useState([]);
-  const { setFilter } = useContext(Context);
+  const [isFiltered, setIsFiltered] = useState('');
+  const { setRecipes } = useContext(Context);
 
   useEffect(() => {
     if (drink) {
@@ -15,25 +16,29 @@ export default function FilterCategory({ drink }) {
     // eslint-disable-next-line
   }, []);
 
-  const handleClick = async (e) => {
-    if (e.target.name) {
+  const handleClick = (e) => {
+    if (isFiltered !== e.target.name && e.target.name) {
       if (drink) {
-        const data = await fetchToken(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${e.target.name}`);
-        return setFilter(data.drinks);
+        return fetchToken(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${e.target.name}`).then(
+          (data) => { setRecipes(data.drinks); setIsFiltered(e.target.name); },
+        );
       }
-      const data = await fetchToken(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${e.target.name}`);
-      return setFilter(data.meals);
+      return fetchToken(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${e.target.name}`).then(
+        (data) => { setRecipes(data.meals); setIsFiltered(e.target.name); },
+      );
     }
     if (drink) {
       return fetchToken(
         'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
       ).then((data) => {
-        setFilter(data.drinks);
+        setRecipes(data.drinks);
+        setIsFiltered('');
       });
     }
     fetchToken('https://www.themealdb.com/api/json/v1/1/search.php?s=').then(
       (data) => {
-        setFilter(data.meals);
+        setRecipes(data.meals);
+        setIsFiltered('');
       },
     );
   };

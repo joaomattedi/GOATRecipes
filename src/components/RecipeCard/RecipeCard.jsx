@@ -1,10 +1,16 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 export default function RecipeCard({ recipe, index, drink }) {
+  const history = useHistory();
+
   if (drink) {
     return (
-      <div data-testid={ `${index}-recipe-card` }>
+      <div
+        data-testid={ `${index}-recipe-card` }
+        onClick={ () => history.push(`/drinks/${recipe.idDrink}`) }
+      >
         <img
           data-testid={ `${index}-card-img` }
           src={ recipe.strDrinkThumb }
@@ -16,7 +22,10 @@ export default function RecipeCard({ recipe, index, drink }) {
     );
   }
   return (
-    <div data-testid={ `${index}-recipe-card` }>
+    <div
+      data-testid={ `${index}-recipe-card` }
+      onClick={ () => history.push(`/foods/${recipe.idMeal}`) }
+    >
       <img
         data-testid={ `${index}-card-img` }
         src={ recipe.strMealThumb }

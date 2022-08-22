@@ -6,19 +6,19 @@ import FilterCategory from '../FilterCategory/FilterCategory';
 import RecipeCard from '../RecipeCard/RecipeCard';
 
 export default function Recipes({ drink = false }) {
-  const { filter, setFilter } = useContext(Context);
+  const { recipes, setRecipes } = useContext(Context);
 
   useEffect(() => {
     if (drink) {
       return fetchToken(
         'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
       ).then((data) => {
-        setFilter(data.drinks);
+        setRecipes(data.drinks);
       });
     }
     fetchToken('https://www.themealdb.com/api/json/v1/1/search.php?s=').then(
       (data) => {
-        setFilter(data.meals);
+        setRecipes(data.meals);
       },
     );
     // eslint-disable-next-line
@@ -27,7 +27,7 @@ export default function Recipes({ drink = false }) {
   return (
     <div>
       <FilterCategory drink={ drink } />
-      {filter.map((element, index) => {
+      {recipes.map((element, index) => {
         if (index > +'11') return true;
         return (
           <RecipeCard
