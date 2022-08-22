@@ -7,10 +7,7 @@ export default function RecipeCard({ recipe, index, drink }) {
 
   if (drink) {
     return (
-      <div
-        data-testid={ `${index}-recipe-card` }
-        onClick={ () => history.push(`/drinks/${recipe.idDrink}`) }
-      >
+      <div>
         <img
           data-testid={ `${index}-card-img` }
           src={ recipe.strDrinkThumb }
@@ -18,14 +15,18 @@ export default function RecipeCard({ recipe, index, drink }) {
           width="150"
         />
         <h3 data-testid={ `${index}-card-name` }>{recipe.strDrink}</h3>
+        <button
+          onClick={ () => history.push(`/drinks/${recipe.idDrink}`) }
+          data-testid={ `${index}-recipe-card` }
+          type="button"
+        >
+          Details
+        </button>
       </div>
     );
   }
   return (
-    <div
-      data-testid={ `${index}-recipe-card` }
-      onClick={ () => history.push(`/foods/${recipe.idMeal}`) }
-    >
+    <div>
       <img
         data-testid={ `${index}-card-img` }
         src={ recipe.strMealThumb }
@@ -33,6 +34,13 @@ export default function RecipeCard({ recipe, index, drink }) {
         width="150"
       />
       <h3 data-testid={ `${index}-card-name` }>{recipe.strMeal}</h3>
+      <button
+        onClick={ () => history.push(`/foods/${recipe.idMeal}`) }
+        data-testid={ `${index}-recipe-card` }
+        type="button"
+      >
+        Details
+      </button>
     </div>
   );
 }
