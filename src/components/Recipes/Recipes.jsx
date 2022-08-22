@@ -1,23 +1,24 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
+import Context from '../../Context/Context';
 import fetchToken from '../../services/fetchTokens';
 import FilterCategory from '../FilterCategory/FilterCategory';
 import RecipeCard from '../RecipeCard/RecipeCard';
 
 export default function Recipes({ drink = false }) {
-  const [recipes, setRecipes] = useState([]);
+  const { filter, setFilter } = useContext(Context);
 
   useEffect(() => {
     if (drink) {
       return fetchToken(
         'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
       ).then((data) => {
-        setRecipes(data.drinks);
+        setFilter(data.drinks);
       });
     }
     fetchToken('https://www.themealdb.com/api/json/v1/1/search.php?s=').then(
       (data) => {
-        setRecipes(data.meals);
+        setFilter(data.meals);
       },
     );
     // eslint-disable-next-line
@@ -26,7 +27,7 @@ export default function Recipes({ drink = false }) {
   return (
     <div>
       <FilterCategory drink={ drink } />
-      {recipes.map((element, index) => {
+      {filter.map((element, index) => {
         if (index > +'11') return true;
         return (
           <RecipeCard
