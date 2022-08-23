@@ -27,7 +27,33 @@ export default function Header({ pageTitle, searchIconRender = true }) {
           </button>
         )}
         { showSearchInput && (
-          <input type="text" name="search" data-testid="search-input" />
+          <div>
+            <input type="text" name="search" data-testid="search-input" />
+            <label htmlFor="search-radio">
+              Ingrediente
+              <input
+                value="ingrediente"
+                id="search-radio"
+                type="radio"
+                data-testid="ingredient-search-radio"
+              />
+              Nome
+              <input
+                value="nome"
+                id="search-radio"
+                type="radio"
+                data-testid="name-search-radio"
+              />
+              Primeira letra
+              <input
+                value="first-letter"
+                id="search-radio"
+                type="radio"
+                data-testid="first-letter-search-radio"
+              />
+            </label>
+            <button type="button" data-testid="exec-search-btn">Buscar</button>
+          </div>
         )}
         <p data-testid="page-title">{pageTitle}</p>
       </div>
