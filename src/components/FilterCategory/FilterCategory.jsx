@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState, useContext } from 'react';
 import Context from '../../Context/Context';
-import fetchToken from '../../services/fetchTokens';
+import fetchAPI from '../../services/fetchAPI';
 
 export default function FilterCategory({ drink }) {
   const [categories, setCategories] = useState([]);
@@ -10,32 +10,32 @@ export default function FilterCategory({ drink }) {
 
   useEffect(() => {
     if (drink) {
-      return fetchToken('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list').then((data) => setCategories(data.drinks));
+      return fetchAPI('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list').then((data) => setCategories(data.drinks));
     }
-    fetchToken('https://www.themealdb.com/api/json/v1/1/list.php?c=list').then((data) => setCategories(data.meals));
+    fetchAPI('https://www.themealdb.com/api/json/v1/1/list.php?c=list').then((data) => setCategories(data.meals));
     // eslint-disable-next-line
   }, []);
 
   const handleClick = (e) => {
     if (isFiltered !== e.target.name && e.target.name) {
       if (drink) {
-        return fetchToken(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${e.target.name}`).then(
+        return fetchAPI(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${e.target.name}`).then(
           (data) => { setRecipes(data.drinks); setIsFiltered(e.target.name); },
         );
       }
-      return fetchToken(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${e.target.name}`).then(
+      return fetchAPI(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${e.target.name}`).then(
         (data) => { setRecipes(data.meals); setIsFiltered(e.target.name); },
       );
     }
     if (drink) {
-      return fetchToken(
+      return fetchAPI(
         'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
       ).then((data) => {
         setRecipes(data.drinks);
         setIsFiltered('');
       });
     }
-    fetchToken('https://www.themealdb.com/api/json/v1/1/search.php?s=').then(
+    fetchAPI('https://www.themealdb.com/api/json/v1/1/search.php?s=').then(
       (data) => {
         setRecipes(data.meals);
         setIsFiltered('');

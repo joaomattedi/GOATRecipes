@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useContext } from 'react';
 import Context from '../../Context/Context';
-import fetchToken from '../../services/fetchTokens';
+import fetchAPI from '../../services/fetchAPI';
 import FilterCategory from '../FilterCategory/FilterCategory';
 import RecipeCard from '../RecipeCard/RecipeCard';
 
@@ -10,13 +10,13 @@ export default function Recipes({ drink = false }) {
 
   useEffect(() => {
     if (drink) {
-      return fetchToken(
+      return fetchAPI(
         'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
       ).then((data) => {
         setRecipes(data.drinks);
       });
     }
-    fetchToken('https://www.themealdb.com/api/json/v1/1/search.php?s=').then(
+    fetchAPI('https://www.themealdb.com/api/json/v1/1/search.php?s=').then(
       (data) => {
         setRecipes(data.meals);
       },
