@@ -5,6 +5,7 @@ import DrinkHeaderDetails from './PageComponents/DrinkHeaderDetails';
 import requestDetails from '../../services/requestDetais';
 import videoId from '../../services/youtubeVideoID';
 import requestRecomendation from '../../services/requestRecomendation';
+import './recipesDetails.css';
 
 function RecipeDetails({ match }) {
   const [typePage, setTypePage] = useState('');
@@ -16,7 +17,6 @@ function RecipeDetails({ match }) {
     requestDetails(setDeatils, setTypePage, setIngredientList, match);
 
     if (match.url.includes('food')) {
-      console.log('oi');
       const endPointDrink = 'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=';
       requestRecomendation(setRecomendation, endPointDrink, 'drinks');
     }
@@ -24,7 +24,7 @@ function RecipeDetails({ match }) {
       const endPointMeal = 'https://www.themealdb.com/api/json/v1/1/search.php?s=';
       requestRecomendation(setRecomendation, endPointMeal, 'meals');
     }
-  }, []);
+  }, [match]);
   return (
     <main>
       {typePage === 'food' && <FoodHeaderDetails details={ details } />}
@@ -54,15 +54,24 @@ function RecipeDetails({ match }) {
           src={ `https://www.youtube.com/embed/${videoId(details.strYoutube)}` }
         />
       )}
-      <ul>
-        {recomendation.map((item, index) => (
-          <li
-            key={ `${index}-recomendation-card` }
-            data-testid={ `${index}-recomendation-card` }
-          >
-            item
-          </li>
-        ))}
+      <ul className="recomendationList">
+        {recomendation.map((item, index) => {
+          console.log(item);
+          return index < +'6' && (
+            <li
+              className="recomendationItemList"
+              key={ `${index}-recomendation-card` }
+              data-testid={ `${index}-recomendation-card` }
+            >
+              {typePage === 'food' && (
+                <p data-testid={ `${index}-recomendation-title` }>{item.strDrink}</p>
+              )}
+              {typePage === 'drink' && (
+                <p data-testid={ `${index}-recomendation-title` }>{item.strMeal}</p>
+              )}
+            </li>
+          );
+        })}
       </ul>
     </main>
   );
