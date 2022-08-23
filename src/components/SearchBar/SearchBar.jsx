@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import Context from '../../Context/Context';
+import fetchFoodAPI from '../../services/fetchFoodAPI';
 
 export default function SearchBar() {
+  const { setSearchResult } = useContext(Context);
   const [searchInput, setSearch] = useState({ search: '', radio: '' });
 
   const handleSearchInputChange = ({ target }) => {
@@ -8,8 +11,14 @@ export default function SearchBar() {
     setSearch((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const onSearchButtonClick = () => {
-    console.log(searchInput);
+  const onSearchButtonClick = async () => {
+    const { radio, search } = searchInput;
+    if (radio === 'first-letter' && search.length > 1) {
+      global.alert('Your search must have only 1 (one) character');
+    } else {
+      const result = await fetchFoodAPI(radio, search);
+      await setSearchResult(result);
+    }
   };
 
   return (
