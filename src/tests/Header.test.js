@@ -25,23 +25,23 @@ describe('Testes do componente Header', () => {
     userEvent.click(openSearchBtn);
 
     const searchInput = screen.getByTestId('search-input');
-  //   const radio1 = screen.getByTestId('ingredient-search-radio');
-  //   const radio2 = screen.getByTestId('name-search-radio');
-  //   const radio3 = screen.getByTestId('first-letter-search-radio');
-  //   const execSearchBtn = screen.getByTestId('exec-search-btn');
+    const radio1 = screen.getByTestId('ingredient-search-radio');
+    const radio2 = screen.getByTestId('name-search-radio');
+    const radio3 = screen.getByTestId('first-letter-search-radio');
+    const execSearchBtn = screen.getByTestId('exec-search-btn');
 
-  //   expect(searchInput).toBeInTheDocument();
-  //   expect(radio1).toBeInTheDocument();
-  //   expect(radio2).toBeInTheDocument();
-  //   expect(radio3).toBeInTheDocument();
-  //   expect(execSearchBtn).toBeInTheDocument();
+    expect(searchInput).toBeInTheDocument();
+    expect(radio1).toBeInTheDocument();
+    expect(radio2).toBeInTheDocument();
+    expect(radio3).toBeInTheDocument();
+    expect(execSearchBtn).toBeInTheDocument();
 
     userEvent.click(openSearchBtn);
 
     expect(searchInput).not.toBeInTheDocument();
-  //   expect(radio1).not.toBeInTheDocument();
-  //   expect(radio2).not.toBeInTheDocument();
-  //   expect(radio3).not.toBeInTheDocument();
-  //   expect(execSearchBtn).not.toBeInTheDocument();
+    expect(radio1).not.toBeInTheDocument();
+    expect(radio2).not.toBeInTheDocument();
+    expect(radio3).not.toBeInTheDocument();
+    expect(execSearchBtn).not.toBeInTheDocument();
   });
 });
