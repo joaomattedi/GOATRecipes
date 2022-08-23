@@ -18,8 +18,13 @@ function RecipeDetails({ match }) {
   const [recomendation, setRecomendation] = useState([1]);
   const [doneRecipe, setDoneRecipe] = useState(false);
   const [inProgress, setInProgress] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
-  const { showCopied, shareButtonClick } = useContext(Context);
+  const {
+    showCopied,
+    shareButtonClick,
+    isFavorite,
+    setIsFavorite,
+    favoriteButtonClick,
+  } = useContext(Context);
 
   useEffect(() => {
     requestDetails(setDeatils, setTypePage, setIngredientList, match);
@@ -49,38 +54,15 @@ function RecipeDetails({ match }) {
 
   const history = useHistory();
 
-  const favoriteButtonClick = () => {
-    const objShape = {
-      alcoholicOrNot: typePage === 'drink' ? details.strAlcoholic : '',
-      category: details.strCategory,
-      id: typePage === 'drink' ? details.idDrink : details.idMeal,
-      image:
-        typePage === 'drink' ? details.strDrinkThumb : details.strMealThumb,
-      name: typePage === 'drink' ? details.strDrink : details.strMeal,
-      nationality: typePage === 'drink' ? '' : details.strArea,
-      type: typePage,
-    };
-    if (localStorage.getItem('favoriteRecipes') === null) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([objShape]));
-    } else if (isFavorite) {
-      localStorage.setItem(
-        'favoriteRecipes',
-        JSON.stringify([
-          ...JSON.parse(localStorage.getItem('favoriteRecipes')).map(
-            (item) => item.id !== match.params.id,
-          ),
-        ]),
-      );
-    } else {
-      localStorage.setItem(
-        'favoriteRecipes',
-        JSON.stringify([
-          ...JSON.parse(localStorage.getItem('favoriteRecipes')),
-          objShape,
-        ]),
-      );
-    }
-    setIsFavorite((prevState) => !prevState);
+  const objShape = {
+    alcoholicOrNot: typePage === 'drink' ? details.strAlcoholic : '',
+    category: details.strCategory,
+    id: typePage === 'drink' ? details.idDrink : details.idMeal,
+    image:
+      typePage === 'drink' ? details.strDrinkThumb : details.strMealThumb,
+    name: typePage === 'drink' ? details.strDrink : details.strMeal,
+    nationality: typePage === 'drink' ? '' : details.strArea,
+    type: typePage,
   };
 
   return (
@@ -146,7 +128,7 @@ function RecipeDetails({ match }) {
         src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
         data-testid="favorite-btn"
         type="button"
-        onClick={ favoriteButtonClick }
+        onClick={ () => favoriteButtonClick(objShape, match.params.id) }
       >
         <img src={ isFavorite ? blackHeartIcon : whiteHeartIcon } alt="heart" />
       </button>

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import Context from '../Context/Context';
 import shareIcon from '../images/shareIcon.svg';
+import favoriteIcon from '../images/blackHeartIcon.svg';
 
 function CardRecipe({
   src,
@@ -15,8 +16,9 @@ function CardRecipe({
   alcoholicOrNot,
   nationality,
   id,
+  typePage,
 }) {
-  const { showCopied, shareButtonClick } = useContext(Context);
+  const { showCopied, shareButtonClick, favoriteButtonClick } = useContext(Context);
   const history = useHistory();
   const redirectToRecipePage = () => {
     history.push(`/${type}s/${id}`);
@@ -68,7 +70,15 @@ function CardRecipe({
       >
         Share
       </button>
-      {tags.map((tagName) => (
+      <button
+        src={ favoriteIcon }
+        type="button"
+        data-testid={ `${index}-horizontal-favorite-btn` }
+        onClick={ () => favoriteButtonClick('remove', id) }
+      >
+        Vavorite
+      </button>
+      {typePage !== 'favorite' && tags.map((tagName) => (
         <p
           data-testid={ `${index}-${tagName}-horizontal-tag` }
           key={ `${index}-${tagName}` }
@@ -91,6 +101,7 @@ CardRecipe.propTypes = {
   alcoholicOrNot: PropTypes.string.isRequired,
   nationality: PropTypes.string.isRequired,
   id: PropTypes.string.isRequired,
+  typePage: PropTypes.string.isRequired,
 };
 
 export default CardRecipe;
