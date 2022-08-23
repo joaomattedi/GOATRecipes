@@ -14,18 +14,17 @@ describe('Testes do componente Header', () => {
 		expect(history.location.pathname).toBe('/profile');
   });
 
-  // it('Verifica funcionalidades do Header', () => {
-  //   const { history } = renderWithRouter(<App />);
-  //   history.push('/foods');
+  it('Verifica funcionalidades do Header', () => {
+    renderWithRouter(<Header />);
 
-  //   const openSearchBtn = screen.getByTestId('search-top-btn'); 
-  //   const title = screen.getByTestId('page-title');
+    const openSearchBtn = screen.getByTestId('search-top-btn'); 
+    const title = screen.getByTestId('page-title');
 
-  //   expect(title).toBeInTheDocument();
+    expect(title).toBeInTheDocument();
 
-  //   userEvent.click(openSearchBtn);
+    userEvent.click(openSearchBtn);
 
-  //   const searchInput = screen.getByTestId('search-input');
+    const searchInput = screen.getByTestId('search-input');
   //   const radio1 = screen.getByTestId('ingredient-search-radio');
   //   const radio2 = screen.getByTestId('name-search-radio');
   //   const radio3 = screen.getByTestId('first-letter-search-radio');
@@ -37,12 +36,12 @@ describe('Testes do componente Header', () => {
   //   expect(radio3).toBeInTheDocument();
   //   expect(execSearchBtn).toBeInTheDocument();
 
-  //   userEvent.click(openSearchBtn);
+    userEvent.click(openSearchBtn);
 
-  //   expect(searchInput).not.toBeInTheDocument();
+    expect(searchInput).not.toBeInTheDocument();
   //   expect(radio1).not.toBeInTheDocument();
   //   expect(radio2).not.toBeInTheDocument();
   //   expect(radio3).not.toBeInTheDocument();
   //   expect(execSearchBtn).not.toBeInTheDocument();
-  // });
+  });
 });

@@ -1,10 +1,16 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import profileIcon from '../../images/profileIcon.svg';
 import searchIcon from '../../images/searchIcon.svg';
 
 export default function Header({ pageTitle, searchIconRender = true }) {
+  const [showSearchInput, setShowSearchInput] = useState(false);
+
+  const onSearchIconClick = () => {
+    setShowSearchInput(!showSearchInput);
+  };
+
   return (
     <header>
       <div>
@@ -16,7 +22,12 @@ export default function Header({ pageTitle, searchIconRender = true }) {
           />
         </NavLink>
         {searchIconRender && (
-          <img src={ searchIcon } alt="search" data-testid="search-top-btn" />
+          <button type="button" onClick={ onSearchIconClick }>
+            <img src={ searchIcon } alt="search" data-testid="search-top-btn" />
+          </button>
+        )}
+        { showSearchInput && (
+          <input type="text" name="search" data-testid="search-input" />
         )}
         <p data-testid="page-title">{pageTitle}</p>
       </div>
