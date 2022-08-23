@@ -4,7 +4,6 @@ import renderWithRouter from './helpers/renderWithRouter';
 import userEvent from '@testing-library/user-event';
 import Header from '../components/Header/Header';
 import mealsByIngredient from './mocks/mealsByIngredient';
-import App from '../App';
 
 describe('Testa a barra de busca na página de comidas', () => {
   beforeEach(() => {
@@ -159,7 +158,7 @@ describe('Testa a barra de busca na página de comidas', () => {
 //   });
 // });
 
-// //   // Página de bebidas
+  // Página de bebidas
 // describe('Testa a barra de busca na página de bebidas', () => {
 //   beforeEach(() => {
 //     jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve({
