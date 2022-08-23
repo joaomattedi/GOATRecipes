@@ -1,11 +1,19 @@
 .recomendationList {
-    display: flex;
-    overflow-x: auto;
+  display: flex;
+  overflow-x: auto;
 }
 
-.recomendationList>li {
-    display: flex;
-    flex-shrink: 0;
-    height: 50vw;
-    width: 50vw;
+.recomendationList > li {
+  display: flex;
+  flex-shrink: 0;
+  height: 50vw;
+  width: 50vw;
+}
+
+.start-recipe-btn {
+  bottom: 0;
+  height: 33px;
+  left: 140px;
+  position: fixed;
+  width: 80px;
 }
