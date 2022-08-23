@@ -1,8 +1,11 @@
 import React, { useState, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import Context from '../../Context/Context';
+import fetchDrinkAPI from '../../services/fetchDrinkAPI';
 import fetchFoodAPI from '../../services/fetchFoodAPI';
 
 export default function SearchBar() {
+  const history = useHistory();
   const { setSearchResult } = useContext(Context);
   const [searchInput, setSearch] = useState({ search: '', radio: '' });
 
@@ -12,11 +15,13 @@ export default function SearchBar() {
   };
 
   const onSearchButtonClick = async () => {
+    const { pathname } = history.location;
     const { radio, search } = searchInput;
     if (radio === 'first-letter' && search.length > 1) {
       global.alert('Your search must have only 1 (one) character');
     } else {
-      const result = await fetchFoodAPI(radio, search);
+      const result = pathname.match('food') ? await fetchFoodAPI(radio, search)
+        : await fetchDrinkAPI(radio, search);
       await setSearchResult(result);
     }
   };

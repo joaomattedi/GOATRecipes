@@ -1,102 +1,96 @@
-// import React from 'react';
-// import { screen, waitFor } from '@testing-library/react';
-// import renderWithRouter from './helper/renderWithRouter';
-// import App from '../App';
-// import userEvent from '@testing-library/user-event';
-// import mealsByIngredient from './mocks/mealsByIngredients';
-// import drinks from './mocks/drinks';
-// import mealCategories from './mocks/mealCategorys';
+import React from 'react';
+import { screen, waitFor } from '@testing-library/react';
+import renderWithRouter from './helpers/renderWithRouter';
+import userEvent from '@testing-library/user-event';
+import Header from '../components/Header/Header';
+import mealsByIngredient from './mocks/mealsByIngredient';
+import App from '../App';
 
-// describe('Testa a barra de busca na página de comidas', () => {
-//   beforeEach(() => {
-//     jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve({
-//       json: () => Promise.resolve(mealsByIngredient),
-//     }));
-//   });
+describe('Testa a barra de busca na página de comidas', () => {
+  beforeEach(() => {
+    jest.spyOn(global, 'fetch').mockImplementation(() => Promise.resolve({
+      json: () => Promise.resolve(mealsByIngredient),
+    }));
+  });
  
-//   afterEach(() => jest.clearAllMocks());
+  afterEach(() => jest.clearAllMocks());
   
-//   it('Verifica a funcionalidade do filtro de ingredientes', async () => {
-//     const { history } = renderWithRouter(<App />);
-//     history.push('/foods');
+  it('Verifica a funcionalidade do filtro de ingredientes', async () => {
+    const { history } = renderWithRouter(<Header />);
+    history.push('/foods');
 
-//     const openSearchBtn = screen.getByTestId('search-top-btn');
-//     userEvent.click(openSearchBtn);
+    const openSearchBtn = screen.getByTestId('search-top-btn');
+    userEvent.click(openSearchBtn);
 
-//     const search = screen.getByTestId('search-input');
-//     const ingredientRadio = screen.getByTestId('ingredient-search-radio');
-//     const searchButton = screen.getAllByRole('button', { name:/search/i });
+    const search = screen.getByTestId('search-input');
+    const ingredientRadio = screen.getByTestId('ingredient-search-radio');
+    const searchButton = screen.getAllByRole('button', { name:/search/i });
 
-//     userEvent.click(ingredientRadio);
-//     userEvent.type(search, 'chicken');
-//     userEvent.click(searchButton[1]);
+    userEvent.click(ingredientRadio);
+    userEvent.type(search, 'chicken');
+    userEvent.click(searchButton[1]);
 
-//     await waitFor(() => expect(global.fetch).toHaveBeenCalled());
+    await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?i=chicken'));
+  });
 
-//     const ingredient = screen.getByTestId('0-card-name');
-//     expect(ingredient).toHaveTextContent('Brown Stew Chicken');
-//   });
+  it('Verifica a funcionalidade do filtro de nome', async () => {
+    const { history } = renderWithRouter(<Header />);
+    history.push('/foods');
 
-//   it('Verifica a funcionalidade do filtro de nome', async () => {
-//     const { history } = renderWithRouter(<App />);
-//     history.push('/foods');
+    const openSearchBtn = screen.getByTestId('search-top-btn');
+    userEvent.click(openSearchBtn);
 
-//     const openSearchBtn = screen.getByTestId('search-top-btn');
-//     userEvent.click(openSearchBtn);
+    const searchInput = screen.getByTestId('search-input');
+    const nameRadio = screen.getByTestId('name-search-radio');
+    const searchButton = screen.getByTestId('exec-search-btn');
 
-//     const searchInput = screen.getByTestId('search-input');
-//     const nameRadio = screen.getByTestId('name-search-radio');
-//     const searchButton = screen.getByTestId('exec-search-btn');
+    userEvent.click(nameRadio);
+    userEvent.type(searchInput, 'Chicken');
+    userEvent.click(searchButton);
 
-//     userEvent.click(nameRadio);
-//     userEvent.type(searchInput, 'Chicken');
-//     userEvent.click(searchButton);
+    await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=Chicken'));
+  });
 
-//     await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=Chicken'));
-//   });
+  it('Verifica a funcionalidade do filtro de primeira letra', async () => {
+    const { history } = renderWithRouter(<Header />);
+    history.push('/foods');
 
-//   it('Verifica a funcionalidade do filtro de primeira letra', async () => {
-//     const { history } = renderWithRouter(<App />);
-//     history.push('/foods');
+    const openSearchBtn = screen.getByTestId('search-top-btn');
+    userEvent.click(openSearchBtn);
 
-//     const openSearchBtn = screen.getByTestId('search-top-btn');
-//     userEvent.click(openSearchBtn);
+    const searchInput = screen.getByTestId('search-input');
+    const firstLetterRadio = screen.getByTestId('first-letter-search-radio');
+    const searchButton = screen.getByTestId('exec-search-btn');
 
-//     const searchInput = screen.getByTestId('search-input');
-//     const firstLetterRadio = screen.getByTestId('first-letter-search-radio');
-//     const searchButton = screen.getByTestId('exec-search-btn');
+    userEvent.click(firstLetterRadio);
+    userEvent.type(searchInput, 'l');
+    userEvent.click(searchButton);
 
-//     userEvent.click(firstLetterRadio);
-//     userEvent.type(searchInput, 'l');
-//     userEvent.click(searchButton);
+    await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?f=l'));
+  });
 
-//     await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?f=l'));
-//   });
+  it('Verifica se ao selecionar uma letra e pesquisar por duas alert é disparado', async () => {
+    global.alert = jest.fn();
+    const { history } = renderWithRouter(<Header />);
+    history.push('/foods');
 
-//   it('Verifica se ao selecionar uma letra e pesquisar por duas alert é disparado', async () => {
-//     global.alert = jest.fn();
-//     const { history } = renderWithRouter(<App />);
-//     history.push('/foods');
+    jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
+      json: () => Promise.resolve({ 'meals': null }),
+    }));
 
-//     await waitFor(() => expect(global.fetch).toHaveBeenCalledTimes(2));
+    const btnOpenSearch = screen.getByTestId('search-top-btn');
+    userEvent.click(btnOpenSearch);
 
-//     jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
-//       json: () => Promise.resolve({ 'meals': null }),
-//     }));
+    const searchInput = screen.getByTestId('search-input');
+    const firstLetterRadio = screen.getByTestId('first-letter-search-radio');
+    const searchButton = screen.getByTestId('exec-search-btn');
 
-//     const btnOpenSearch = screen.getByTestId('search-top-btn');
-//     userEvent.click(btnOpenSearch);
-
-//     const searchInput = screen.getByTestId('search-input');
-//     const firstLetterRadio = screen.getByTestId('first-letter-search-radio');
-//     const searchButton = screen.getByTestId('exec-search-btn');
-
-//     userEvent.click(firstLetterRadio);
-//     userEvent.type(searchInput, 'ab');
-//     userEvent.click(searchButton);
+    userEvent.click(firstLetterRadio);
+    userEvent.type(searchInput, 'ab');
+    userEvent.click(searchButton);
     
-//     await waitFor(() => expect(global.alert).toBeCalledWith('Your search must have only 1 (one) character'))
-//   });
+    await waitFor(() => expect(global.alert).toBeCalledWith('Your search must have only 1 (one) character'))
+  });
 
 //   it('Verifica se ao pesquisar por xablau alert é disparado', async () => {
 //     global.alert = jest.fn();
@@ -234,4 +228,4 @@
 //     await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=v'));
        
 //   });
-// });
+});
