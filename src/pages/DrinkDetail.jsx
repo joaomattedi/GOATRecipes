@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import RecipeDetails from '../components/Pages/RecipeDetails';
+import RecipeDetails from '../components/RecipeDetails/RecipeDetails';
 
 export default function DrinkDetail({ match }) {
   return (

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
-import FoodHeaderDetails from './PageComponents/FoodHeaderDetails';
-import DrinkHeaderDetails from './PageComponents/DrinkHeaderDetails';
+import FoodHeaderDetails from '../FoodHeaderDetails/FoodHeaderDetails';
+import DrinkHeaderDetails from '../DrinkHeaderDetails/DrinkHeaderDetails';
 import requestDetails from '../../services/requestDetais';
 import videoId from '../../services/youtubeVideoID';
 import requestRecomendation from '../../services/requestRecomendation';
