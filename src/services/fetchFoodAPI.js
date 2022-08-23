@@ -14,7 +14,7 @@ const fetchFoodAPI = async (searchOption, searchInput) => {
 
   const response = await fetch(endpoint);
   const data = await response.json();
-  return data;
+  return data.meals;
 };
 
 export default fetchFoodAPI;

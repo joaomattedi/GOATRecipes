@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Context from '../../Context/Context';
 import fetchDrinkAPI from '../../services/fetchDrinkAPI';
@@ -6,8 +6,17 @@ import fetchFoodAPI from '../../services/fetchFoodAPI';
 
 export default function SearchBar() {
   const history = useHistory();
-  const { setSearchResult } = useContext(Context);
+  const { pathname } = history.location;
+  const { searchResult, setSearchResult } = useContext(Context);
   const [searchInput, setSearch] = useState({ search: '', radio: '' });
+
+  useEffect(() => {
+    if (searchResult.length === 1 && pathname === '/foods') {
+      history.push(`/foods/${searchResult[0].idMeal}`);
+    } else if (searchResult.length === 1 && pathname === '/drinks') {
+      history.push(`/drinks/${searchResult[0].idDrink}`);
+    }
+  }, [history, pathname, searchResult]);
 
   const handleSearchInputChange = ({ target }) => {
     const { name, value } = target;
@@ -15,7 +24,6 @@ export default function SearchBar() {
   };
 
   const onSearchButtonClick = async () => {
-    const { pathname } = history.location;
     const { radio, search } = searchInput;
     if (radio === 'first-letter' && search.length > 1) {
       global.alert('Your search must have only 1 (one) character');
