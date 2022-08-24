@@ -4,10 +4,13 @@ import Context from './Context';
 
 export default function Provider({ children }) {
   const [searchResult, setSearchResult] = useState([]);
+  const [recipes, setRecipes] = useState([]);
 
   const context = {
     searchResult,
     setSearchResult,
+    recipes,
+    setRecipes,
   };
 
   return (

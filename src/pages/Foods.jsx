@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import Header from '../components/Header/Header';
 import Context from '../Context/Context';
+// import Recipes from '../components/Recipes/Recipes';
 
 export default function Foods() {
   const indexLimit = 12;
@@ -19,6 +20,7 @@ export default function Foods() {
             <h3 data-testid={ `${index}-card-name` }>{ strMeal }</h3>
           </div>
         )) }
+      {/* <Recipes /> */}
     </div>
   );
 }
