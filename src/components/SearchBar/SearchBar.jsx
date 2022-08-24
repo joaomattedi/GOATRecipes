@@ -11,10 +11,12 @@ export default function SearchBar() {
   const [searchInput, setSearch] = useState({ search: '', radio: '' });
 
   useEffect(() => {
-    if (searchResult.length === 1 && pathname === '/foods') {
-      history.push(`/foods/${searchResult[0].idMeal}`);
-    } else if (searchResult.length === 1 && pathname === '/drinks') {
-      history.push(`/drinks/${searchResult[0].idDrink}`);
+    if (searchResult !== null) {
+      if (pathname === '/foods' && searchResult.length === 1) {
+        history.push(`/foods/${searchResult[0].idMeal}`);
+      } else if (searchResult.length === 1 && pathname === '/drinks') {
+        history.push(`/drinks/${searchResult[0].idDrink}`);
+      }
     }
   }, [history, pathname, searchResult]);
 
@@ -31,6 +33,9 @@ export default function SearchBar() {
       const result = pathname.match('food') ? await fetchFoodAPI(radio, search)
         : await fetchDrinkAPI(radio, search);
       await setSearchResult(result);
+      if (result === null || result.length === 0) {
+        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+      }
     }
   };
 

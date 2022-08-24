@@ -8,17 +8,17 @@ export default function Foods() {
   return (
     <div>
       <Header pageTitle="Foods" />
-      { searchResult.map(({ idMeal, strMeal, strMealThumb }, index) => index < indexLimit
-      && (
-        <div data-testid={ `${index}-recipe-card` } key={ idMeal }>
-          <img
-            data-testid={ `${index}-card-img` }
-            src={ strMealThumb }
-            alt={ strMeal }
-          />
-          <h3 data-testid={ `${index}-card-name` }>{ strMeal }</h3>
-        </div>
-      )) }
+      { searchResult && searchResult
+        .map(({ idMeal, strMeal, strMealThumb }, index) => index < indexLimit && (
+          <div data-testid={ `${index}-recipe-card` } key={ idMeal }>
+            <img
+              data-testid={ `${index}-card-img` }
+              src={ strMealThumb }
+              alt={ strMeal }
+            />
+            <h3 data-testid={ `${index}-card-name` }>{ strMeal }</h3>
+          </div>
+        )) }
     </div>
   );
 }

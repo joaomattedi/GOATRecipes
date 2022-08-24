@@ -8,17 +8,18 @@ export default function Drinks() {
   return (
     <div>
       <Header pageTitle="Drinks" />
-      { searchResult.map(({ idDrink, strDrink, strDrinkThumb }, index) => (
-        index < indexLimit && (
-          <div data-testid={ `${index}-recipe-card` } key={ idDrink }>
-            <img
-              data-testid={ `${index}-card-img` }
-              src={ strDrinkThumb }
-              alt={ strDrink }
-            />
-            <h3 data-testid={ `${index}-card-name` }>{ strDrink }</h3>
-          </div>
-        ))) }
+      { searchResult && searchResult
+        .map(({ idDrink, strDrink, strDrinkThumb }, index) => (
+          index < indexLimit && (
+            <div data-testid={ `${index}-recipe-card` } key={ idDrink }>
+              <img
+                data-testid={ `${index}-card-img` }
+                src={ strDrinkThumb }
+                alt={ strDrink }
+              />
+              <h3 data-testid={ `${index}-card-name` }>{ strDrink }</h3>
+            </div>
+          ))) }
     </div>
   );
 }
