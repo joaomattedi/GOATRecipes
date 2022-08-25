@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
 import Context from '../Context/Context';
 import Recipes from '../components/Recipes/Recipes';
 
@@ -9,6 +10,7 @@ export default function Foods() {
   return (
     <div>
       <Header pageTitle="Foods" />
+      <Footer />
       { searchResult && searchResult
         .map(({ idMeal, strMeal, strMealThumb }, index) => index < indexLimit && (
           <div data-testid={ `${index}-recipe-card` } key={ idMeal }>
