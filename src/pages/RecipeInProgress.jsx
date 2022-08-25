@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import clipboardCopy from 'clipboard-copy';
 import fetchAPI from '../services/fetchAPI';
 import getLocalStorageIngredients from '../services/helpers/getLocalStorageIngredients';
 import saveInProgressIngredients from '../services/helpers/saveInProgressIngredients';
@@ -8,6 +9,7 @@ import saveInProgressIngredients from '../services/helpers/saveInProgressIngredi
 export default function RecipeInProgress({ drink = false }) {
   const [recipe, setRecipe] = useState({});
   const [checkedIngredients, setCheckedIngredients] = useState([]);
+  const [copied, setCopied] = useState(false);
   const { id } = useParams();
   const regExIngredients = new RegExp('strIngredient', 'gi');
   const ingredients = Object.keys(recipe)
@@ -47,8 +49,18 @@ export default function RecipeInProgress({ drink = false }) {
           width="400"
         />
         <h1 data-testid="recipe-title">{recipe.strDrink}</h1>
-        <button type="button" data-testid="share-btn">Share</button>
+        <button
+          type="button"
+          data-testid="share-btn"
+          onClick={ () => {
+            setCopied(true);
+            clipboardCopy(`http://localhost:3000/drinks/${id}`);
+          } }
+        >
+          Share
+        </button>
         <button type="button" data-testid="favorite-btn">{'<3'}</button>
+        {copied && (<p>Link copied!</p>)}
         <h2 data-testid="recipe-category">{recipe.strCategory}</h2>
 
         {ingredients.map((element, index) => (
@@ -81,7 +93,17 @@ export default function RecipeInProgress({ drink = false }) {
         width="400"
       />
       <h1 data-testid="recipe-title">{recipe.strMeal}</h1>
-      <button type="button" data-testid="share-btn">Share</button>
+      <button
+        type="button"
+        data-testid="share-btn"
+        onClick={ () => {
+          setCopied(true);
+          clipboardCopy(`http://localhost:3000/foods/${id}`);
+        } }
+      >
+        Share
+      </button>
+      {copied && (<p>Link copied!</p>)}
       <button type="button" data-testid="favorite-btn">{'<3'}</button>
       <h2 data-testid="recipe-category">{recipe.srtCategory}</h2>
 
