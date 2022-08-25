@@ -80,7 +80,13 @@ export default function RecipeInProgress({ drink = false }) {
           </label>
         ))}
         <p data-testid="instructions">{recipe.strInstructions}</p>
-        <button type="button" data-testid="finish-recipe-btn">Finalizar</button>
+        <button
+          type="button"
+          data-testid="finish-recipe-btn"
+          disabled={ ingredients.length !== checkedIngredients.length }
+        >
+          Finalizar
+        </button>
       </div>
     );
   }
@@ -127,7 +133,7 @@ export default function RecipeInProgress({ drink = false }) {
       <button
         type="button"
         data-testid="finish-recipe-btn"
-        disabled={ ingredients.length !== checkedIngredients }
+        disabled={ ingredients.length !== checkedIngredients.length }
       >
         Finalizar
       </button>
