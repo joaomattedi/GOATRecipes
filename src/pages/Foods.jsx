@@ -9,7 +9,7 @@ export default function Foods() {
   return (
     <div>
       <Header pageTitle="Foods" />
-      { searchResult && searchResult
+      { searchResult ? searchResult
         .map(({ idMeal, strMeal, strMealThumb }, index) => index < indexLimit && (
           <div data-testid={ `${index}-recipe-card` } key={ idMeal }>
             <img
@@ -19,8 +19,7 @@ export default function Foods() {
             />
             <h3 data-testid={ `${index}-card-name` }>{ strMeal }</h3>
           </div>
-        )) }
-      <Recipes />
+        )) : <Recipes /> }
     </div>
   );
 }
