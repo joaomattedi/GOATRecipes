@@ -14,7 +14,7 @@ export default function RecipeInProgress({ drink = false }) {
   const regExIngredients = new RegExp('strIngredient', 'gi');
   const ingredients = Object.keys(recipe)
     .filter((element) => element.match(regExIngredients) && recipe[element]);
-  console.log('rerender');
+
   useEffect(() => {
     if (drink) {
       getLocalStorageIngredients(setCheckedIngredients, id, true);
