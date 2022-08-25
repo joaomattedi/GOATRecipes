@@ -45,12 +45,12 @@ export default function FilterCategory({ drink }) {
 
   return (
     <div>
-      {categories.map(({ strCategory }, index) => {
+      {categories && categories.map(({ strCategory }, index) => {
         if (index > +'4') return true;
         return (
           <button
             data-testid={ `${strCategory}-category-filter` }
-            key={ strCategory }
+            key={ `strCategory ${index}` }
             name={ strCategory }
             type="button"
             onClick={ async (e) => handleClick(e) }
