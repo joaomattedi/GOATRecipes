@@ -1,4 +1,4 @@
-const mealsByIngredient = {
+const mealsByIngredients = {
   'meals': [
     {
       'strMeal': 'Brown Stew Chicken',
@@ -53,4 +53,4 @@ const mealsByIngredient = {
   ],
 };
 
-export default mealsByIngredient;
+export default mealsByIngredients;

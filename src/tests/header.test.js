@@ -1,13 +1,12 @@
 import React from 'react';
 import { screen } from '@testing-library/react';
-import renderWithRouter from './helper/renderWithRouter';
-import App from '../App';
+import renderWithRouter from './helpers/renderWithRouter';
 import userEvent from '@testing-library/user-event';
+import Header from '../components/Header/Header';
 
-describe('Testa a página de Login', () => {
+describe('Testes do componente Header', () => {
   it('Verifica se a pagina é redirecionada ao PROFILE ao clicar na imagem de perfil', () => {
-		const { history } = renderWithRouter(<App />)
-    history.push('/foods')
+    const { history } = renderWithRouter(<Header />);
 
     const profileBtn = screen.getByTestId('profile-top-btn');
     userEvent.click(profileBtn);
@@ -16,8 +15,7 @@ describe('Testa a página de Login', () => {
   });
 
   it('Verifica funcionalidades do Header', () => {
-    const { history } = renderWithRouter(<App />);
-    history.push('/foods');
+    renderWithRouter(<Header />);
 
     const openSearchBtn = screen.getByTestId('search-top-btn'); 
     const title = screen.getByTestId('page-title');
