@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import Header from '../components/Header/Header';
+import Footer from '../components/Footer/Footer';
 import Context from '../Context/Context';
 import Recipes from '../components/Recipes/Recipes';
 
@@ -9,7 +10,8 @@ export default function Foods() {
   return (
     <div>
       <Header pageTitle="Foods" />
-      { searchResult ? searchResult
+
+      { searchResult.length > 0 ? searchResult
         .map(({ idMeal, strMeal, strMealThumb }, index) => index < indexLimit && (
           <div data-testid={ `${index}-recipe-card` } key={ idMeal }>
             <img
@@ -20,6 +22,7 @@ export default function Foods() {
             <h3 data-testid={ `${index}-card-name` }>{ strMeal }</h3>
           </div>
         )) : <Recipes /> }
+      <Footer />
     </div>
   );
 }
