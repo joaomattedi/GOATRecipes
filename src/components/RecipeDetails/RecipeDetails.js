@@ -71,7 +71,7 @@ function RecipeDetails({ match }) {
       {typePage === 'drink' && <DrinkHeaderDetails details={ details } />}
       <ul className="ingredinents">
         {ingredientList.map((ingredient, index) => {
-          const condicao = ingredient !== 'null - null' && ingredient !== ' - ';
+          const condicao = ingredient !== 'null - null' && ingredient !== '  - ';
           return (
             condicao && (
               <li

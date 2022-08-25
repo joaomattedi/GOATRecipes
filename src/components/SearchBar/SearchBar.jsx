@@ -32,10 +32,10 @@ export default function SearchBar() {
     } else {
       const result = pathname.match('food') ? await fetchFoodAPI(radio, search)
         : await fetchDrinkAPI(radio, search);
-      await setSearchResult(result);
       if (result === null || result.length === 0) {
-        global.alert('Sorry, we haven\'t found any recipes for these filters.');
+        return global.alert('Sorry, we haven\'t found any recipes for these filters.');
       }
+      await setSearchResult(result);
     }
   };
 
@@ -58,18 +58,22 @@ export default function SearchBar() {
           onChange={ handleSearchInputChange }
         />
         Ingredient
+      </label>
+      <label htmlFor="name">
         <input
           value="name"
-          id="search-radio"
+          id="name"
           name="radio"
           type="radio"
           data-testid="name-search-radio"
           onChange={ handleSearchInputChange }
         />
         Name
+      </label>
+      <label htmlFor="first-letter">
         <input
           value="first-letter"
-          id="search-radio"
+          id="first-letter"
           name="radio"
           type="radio"
           data-testid="first-letter-search-radio"

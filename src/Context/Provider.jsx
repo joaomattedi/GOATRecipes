@@ -20,14 +20,11 @@ export default function Provider({ children }) {
     if (localStorage.getItem('favoriteRecipes') === null) {
       localStorage.setItem('favoriteRecipes', JSON.stringify([objShape]));
     } else if (isFavorite || objShape === 'remove') {
-      console.log('oi');
       localStorage.setItem(
         'favoriteRecipes',
         JSON.stringify([
-          ...JSON.parse(localStorage.getItem('favoriteRecipes')).filter((item) => {
-            console.log(item.id !== id);
-            return item.id !== id;
-          }),
+          ...JSON.parse(localStorage.getItem('favoriteRecipes'))
+            .filter((item) => item.id !== id),
         ]),
       );
     } else {

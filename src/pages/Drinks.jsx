@@ -10,8 +10,7 @@ export default function Drinks() {
   return (
     <div>
       <Header pageTitle="Drinks" />
-      <Footer />
-      { searchResult && searchResult
+      { searchResult.length > 0 ? searchResult
         .map(({ idDrink, strDrink, strDrinkThumb }, index) => (
           index < indexLimit && (
             <div data-testid={ `${index}-recipe-card` } key={ idDrink }>
@@ -22,8 +21,8 @@ export default function Drinks() {
               />
               <h3 data-testid={ `${index}-card-name` }>{ strDrink }</h3>
             </div>
-          ))) }
-      <Recipes drink />
+          ))) : <Recipes drink /> }
+      <Footer />
     </div>
   );
 }

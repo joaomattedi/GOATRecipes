@@ -51,9 +51,7 @@ export default function DoneAndfavoriteRecipes({ type }) {
           Drinks
         </button>
       </div>
-      {console.log(typeof recipes)}
-      {console.log(recipes.length)}
-      {recipes.length !== 0 && recipes
+      {recipes && recipes
         .filter((recipe) => (filter === 'all' ? true : filter === recipe.type))
         .map((recipe, index) => (
           <CardRecipe
