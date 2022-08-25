@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import FoodHeaderDetails from '../FoodHeaderDetails/FoodHeaderDetails';
@@ -9,8 +9,7 @@ import requestRecomendation from '../../services/requestRecomendation';
 import whiteHeartIcon from '../../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../../images/blackHeartIcon.svg';
 import './recipesDetails.css';
-
-const copy = require('clipboard-copy');
+import Context from '../../Context/Context';
 
 function RecipeDetails({ match }) {
   const [typePage, setTypePage] = useState('');
@@ -19,14 +18,20 @@ function RecipeDetails({ match }) {
   const [recomendation, setRecomendation] = useState([1]);
   const [doneRecipe, setDoneRecipe] = useState(false);
   const [inProgress, setInProgress] = useState(false);
-  const [showCopied, setShowCopied] = useState(false);
-  const [isFavorite, setIsFavorite] = useState(false);
+  const {
+    showCopied,
+    shareButtonClick,
+    isFavorite,
+    setIsFavorite,
+    favoriteButtonClick,
+  } = useContext(Context);
 
   useEffect(() => {
     requestDetails(setDeatils, setTypePage, setIngredientList, match);
     const doneRecipesArray = localStorage.getItem('doneRecipes');
     const inProgresArray = localStorage.getItem('inProgressRecipes');
     const favoriteArray = localStorage.getItem('favoriteRecipes');
+
     if (doneRecipesArray !== null) {
       setDoneRecipe(doneRecipesArray.includes(match.params.id));
     }
@@ -49,40 +54,15 @@ function RecipeDetails({ match }) {
 
   const history = useHistory();
 
-  const shareButtonClick = async () => {
-    copy(`http://localhost:3000${match.url}`);
-    setShowCopied(true);
-    setTimeout(() => setShowCopied(false), +'3000');
-  };
-
-  const favoriteButtonClick = () => {
-    const objShape = {
-      alcoholicOrNot: typePage === 'drink' ? details.strAlcoholic : '',
-      category: details.strCategory,
-      id: typePage === 'drink' ? details.idDrink : details.idMeal,
-      image:
-        typePage === 'drink' ? details.strDrinkThumb : details.strMealThumb,
-      name: typePage === 'drink' ? details.strDrink : details.strMeal,
-      nationality: typePage === 'drink' ? '' : details.strArea,
-      type: typePage,
-    };
-    if (localStorage.getItem('favoriteRecipes') === null) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([objShape]));
-    } else if (isFavorite) {
-      localStorage.setItem('favoriteRecipes', JSON.stringify([
-        ...JSON.parse(localStorage.getItem('favoriteRecipes'))
-          .map((item) => item.id !== match.params.id),
-      ]));
-    } else {
-      localStorage.setItem(
-        'favoriteRecipes',
-        JSON.stringify([
-          ...JSON.parse(localStorage.getItem('favoriteRecipes')),
-          objShape,
-        ]),
-      );
-    }
-    setIsFavorite((prevState) => !prevState);
+  const objShape = {
+    alcoholicOrNot: typePage === 'drink' ? details.strAlcoholic : '',
+    category: details.strCategory,
+    id: typePage === 'drink' ? details.idDrink : details.idMeal,
+    image:
+      typePage === 'drink' ? details.strDrinkThumb : details.strMealThumb,
+    name: typePage === 'drink' ? details.strDrink : details.strMeal,
+    nationality: typePage === 'drink' ? '' : details.strArea,
+    type: typePage,
   };
 
   return (
@@ -137,14 +117,18 @@ function RecipeDetails({ match }) {
         )}
       </ul>
       {showCopied && <p className="copied-message">Link copied!</p>}
-      <button data-testid="share-btn" type="button" onClick={ shareButtonClick }>
+      <button
+        data-testid="share-btn"
+        type="button"
+        onClick={ () => shareButtonClick(match) }
+      >
         Share
       </button>
       <button
         src={ isFavorite ? blackHeartIcon : whiteHeartIcon }
         data-testid="favorite-btn"
         type="button"
-        onClick={ favoriteButtonClick }
+        onClick={ () => favoriteButtonClick(objShape, match.params.id) }
       >
         <img src={ isFavorite ? blackHeartIcon : whiteHeartIcon } alt="heart" />
       </button>
