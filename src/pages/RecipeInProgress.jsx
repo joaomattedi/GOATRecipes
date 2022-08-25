@@ -2,6 +2,8 @@ import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import fetchAPI from '../services/fetchAPI';
+import getLocalStorageIngredients from '../services/helpers/getLocalStorageIngredients';
+import saveInProgressIngredients from '../services/helpers/saveInProgressIngredients';
 
 export default function RecipeInProgress({ drink = false }) {
   const [recipe, setRecipe] = useState({});
@@ -13,21 +15,26 @@ export default function RecipeInProgress({ drink = false }) {
 
   useEffect(() => {
     if (drink) {
+      getLocalStorageIngredients(setCheckedIngredients, id, true);
       return (
         fetchAPI(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
           .then((data) => setRecipe(data.drinks[0]))
       );
     }
+    getLocalStorageIngredients(setCheckedIngredients, id);
     fetchAPI(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`).then((data) => setRecipe(data.meals[0]));
     // eslint-disable-next-line
   }, []);
 
-  const toggleChecked = (e) => {
+  const toggleChecked = async (e) => {
     if (checkedIngredients.includes(e.target.id)) {
       const newChecked = checkedIngredients.filter((element) => element !== e.target.id);
-      return setCheckedIngredients(newChecked);
+      saveInProgressIngredients(newChecked, id, drink);
+      setCheckedIngredients(newChecked);
+    } else {
+      saveInProgressIngredients([...checkedIngredients, e.target.id], id, drink);
+      setCheckedIngredients([...checkedIngredients, e.target.id]);
     }
-    setCheckedIngredients([...checkedIngredients, e.target.id]);
   };
 
   if (drink) {
@@ -49,9 +56,6 @@ export default function RecipeInProgress({ drink = false }) {
             key={ element }
             htmlFor={ element }
             data-testid={ `${index}-ingredient-step` }
-            style={
-              checkedIngredients.includes(element) && 'text-decoration:line-through'
-            }
           >
             <input
               type="checkbox"
@@ -86,7 +90,6 @@ export default function RecipeInProgress({ drink = false }) {
           key={ element }
           htmlFor={ element }
           data-testid={ `${index}-ingredient-step` }
-          className={ checkedIngredients.includes(element) && 'cu' }
         >
           <input
             type="checkbox"
