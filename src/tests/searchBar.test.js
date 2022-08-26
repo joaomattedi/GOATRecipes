@@ -6,6 +6,7 @@ import Header from '../components/Header/Header';
 import mealsByIngredients from './mocks/mealsByIngredients';
 import Routes from '../Routes/Routes';
 import drinks from './mocks/drinks';
+import Provider from '../Context/Provider';
 
 describe('Testa a barra de busca na página de comidas', () => {
   beforeEach(() => {
@@ -17,7 +18,7 @@ describe('Testa a barra de busca na página de comidas', () => {
   afterEach(() => jest.clearAllMocks());
   
   it('Verifica a funcionalidade do filtro de ingredientes', async () => {
-    const { history } = renderWithRouter(<Header />);
+    const { history } = renderWithRouter(<Provider><Header /></Provider>);
     history.push('/foods');
 
     const openSearchBtn = screen.getByTestId('search-top-btn');
@@ -35,7 +36,7 @@ describe('Testa a barra de busca na página de comidas', () => {
   });
 
   it('Verifica a funcionalidade do filtro de nome', async () => {
-    const { history } = renderWithRouter(<Header />);
+    const { history } = renderWithRouter(<Provider><Header /></Provider>);
     history.push('/foods');
 
     const openSearchBtn = screen.getByTestId('search-top-btn');
@@ -53,7 +54,7 @@ describe('Testa a barra de busca na página de comidas', () => {
   });
 
   it('Verifica a funcionalidade do filtro de primeira letra', async () => {
-    const { history } = renderWithRouter(<Header />);
+    const { history } = renderWithRouter(<Provider><Header /></Provider>);
     history.push('/foods');
 
     const openSearchBtn = screen.getByTestId('search-top-btn');
@@ -72,7 +73,7 @@ describe('Testa a barra de busca na página de comidas', () => {
 
   it('Verifica se ao selecionar uma letra e pesquisar por duas alert é disparado', async () => {
     global.alert = jest.fn();
-    const { history } = renderWithRouter(<Header />);
+    const { history } = renderWithRouter(<Provider><Header /></Provider>);
     history.push('/foods');
 
     jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
@@ -95,7 +96,7 @@ describe('Testa a barra de busca na página de comidas', () => {
 
   it('Verifica se ao pesquisar por xablau alert é disparado', async () => {
     global.alert = jest.fn();
-    const { history } = renderWithRouter(<Header />);
+    const { history } = renderWithRouter(<Provider><Header /></Provider>);
     history.push('/foods');
 
     jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
@@ -116,7 +117,7 @@ describe('Testa a barra de busca na página de comidas', () => {
   });
 
   it('Verifica se ao encontrar um item é redirecionado para a página de detalhes', async () => {
-    const { history } = renderWithRouter(<Routes />);
+    const { history } = renderWithRouter(<Provider><Routes /></Provider>);
     history.push('/foods');
 
     jest.spyOn(global, 'fetch').mockImplementationOnce(() => Promise.resolve({
@@ -156,7 +157,7 @@ describe('Testa a barra de busca na página de bebidas', () => {
   afterEach(() => jest.clearAllMocks());
 
   it('Verifica a funcionalidade do filtro de ingredientes', async () => {
-    const { history } = renderWithRouter(<Routes />);
+    const { history } = renderWithRouter(<Provider><Routes /></Provider>);
     history.push('/drinks');
 
     const openSearchBtn = screen.getByTestId('search-top-btn');
@@ -174,7 +175,7 @@ describe('Testa a barra de busca na página de bebidas', () => {
   });
 
   it('Verifica a funcionalidade do filtro de nome', async () => {
-    const { history } = renderWithRouter(<Routes />);
+    const { history } = renderWithRouter(<Provider><Routes /></Provider>);
     history.push('/drinks');
 
     const openSearchBtn = screen.getByTestId('search-top-btn');
@@ -192,7 +193,7 @@ describe('Testa a barra de busca na página de bebidas', () => {
   });
 
   it('Verifica a funcionalidade do filtro de primeira letra', async () => {
-    const { history } = renderWithRouter(<Routes />);
+    const { history } = renderWithRouter(<Provider><Routes /></Provider>);
     history.push('/drinks');
 
     const openSearchBtn = screen.getByTestId('search-top-btn');

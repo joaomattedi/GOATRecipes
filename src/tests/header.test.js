@@ -3,6 +3,7 @@ import { screen } from '@testing-library/react';
 import renderWithRouter from './helpers/renderWithRouter';
 import userEvent from '@testing-library/user-event';
 import Header from '../components/Header/Header';
+import Provider from '../Context/Provider';
 
 describe('Testes do componente Header', () => {
   it('Verifica se a pagina é redirecionada ao PROFILE ao clicar na imagem de perfil', () => {
@@ -15,7 +16,7 @@ describe('Testes do componente Header', () => {
   });
 
   it('Verifica funcionalidades do Header', () => {
-    renderWithRouter(<Header />);
+    renderWithRouter(<Provider><Header /></Provider>);
 
     const openSearchBtn = screen.getByTestId('search-top-btn'); 
     const title = screen.getByTestId('page-title');
