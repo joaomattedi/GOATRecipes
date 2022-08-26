@@ -27,7 +27,7 @@
     
     userEvent.click(drinkButton);
     expect(history.location.pathname).toBe('/drinks');
-    userEvent.click(drinkButton);
+    userEvent.click(foodButton);
     expect(history.location.pathname).toBe('/foods');
 
   })
