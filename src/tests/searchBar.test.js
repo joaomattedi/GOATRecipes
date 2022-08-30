@@ -7,6 +7,7 @@ import mealsByIngredients from './mocks/mealsByIngredients';
 import Routes from '../Routes/Routes';
 import drinks from './mocks/drinks';
 import Provider from '../Context/Provider';
+import App from '../App';
 
 describe('Testa a barra de busca na página de comidas', () => {
   beforeEach(() => {
@@ -198,9 +199,6 @@ describe('Testa a barra de busca na página de bebidas', () => {
 
     const openSearchBtn = screen.getByTestId('search-top-btn');
     userEvent.click(openSearchBtn);
-    
-    const search = screen.getByTestId('search-input');
-    const radio3 = screen.getByTestId('first-letter-search-radio');
 
     const searchInput = screen.getByTestId('search-input');
     const firstLetterRadio = screen.getByTestId('first-letter-search-radio');
@@ -213,4 +211,35 @@ describe('Testa a barra de busca na página de bebidas', () => {
     await waitFor(() => expect(global.fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?f=v'));
        
   });
+  
 });
+
+// describe('first', () => {
+//   it('Redireciona para a página de detalhes da bebida caso retornar um resultado só',async () => {
+//     const { history } = renderWithRouter(<Provider><App /></Provider>);
+//     const inputEmail = screen.getByTestId('email-input');
+// 		const inputPassword =  screen.getByTestId('password-input');
+// 		const button = screen.getByTestId('login-submit-btn');
+//     userEvent.type(inputEmail, 'teste@teste.com');
+// 		userEvent.type(inputPassword, '1234567');
+// 		userEvent.click(button);
+//     const drinkBtn = await screen.findByTestId('drinks-bottom-btn');
+//     userEvent.click(drinkBtn)
+
+//     const openSearchBtn = await screen.findByTestId('search-top-btn');
+//     userEvent.click(openSearchBtn);
+    
+//     const searchInput = await screen.findByTestId('search-input');
+//     const nameRadio = await screen.findByTestId('name-search-radio');
+//     const searchButton = await screen.findByTestId('exec-search-btn');
+//     userEvent.click(nameRadio);
+//     userEvent.type(searchInput, 'lemon drop');
+//     userEvent.click(searchButton);
+
+//     // waitFor(async () => expect( await screen.findByTestId('0-ingredient-name-and-measure')).toBeInTheDocument())
+//     const favoriteButton = await screen.findByTestId('favorite-btn');
+//     userEvent.click(favoriteButton)
+//     userEvent.click(favoriteButton)
+    
+//   })
+// })

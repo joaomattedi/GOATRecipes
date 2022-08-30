@@ -8,6 +8,7 @@ import saveInProgressIngredients from '../services/helpers/saveInProgressIngredi
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import Context from '../Context/Context';
+import saveDoneRecipe from '../services/helpers/saveDoneRecipe';
 
 export default function RecipeInProgress({ drink = false }) {
   const [recipe, setRecipe] = useState({});
@@ -114,7 +115,10 @@ export default function RecipeInProgress({ drink = false }) {
           type="button"
           data-testid="finish-recipe-btn"
           disabled={ ingredients.length !== checkedIngredients.length }
-          onClick={ () => history.push('/done-recipes') }
+          onClick={ () => {
+            saveDoneRecipe(recipe, drink);
+            history.push('/done-recipes');
+          } }
         >
           Finalizar
         </button>
@@ -172,7 +176,10 @@ export default function RecipeInProgress({ drink = false }) {
         type="button"
         data-testid="finish-recipe-btn"
         disabled={ ingredients.length !== checkedIngredients.length }
-        onClick={ () => history.push('/done-recipes') }
+        onClick={ () => {
+          saveDoneRecipe(recipe, drink);
+          history.push('/done-recipes');
+        } }
       >
         Finalizar
       </button>
